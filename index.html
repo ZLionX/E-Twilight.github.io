@@ -730,7 +730,7 @@
             }
         }
 
-        /* Efecto Glitch para transición */
+        /* Efecto Glitch mejorado */
         .glitch-transition {
             position: fixed;
             top: 0;
@@ -743,6 +743,9 @@
             opacity: 0;
             mix-blend-mode: difference;
             animation: none;
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .glitch-transition.active {
@@ -757,47 +760,47 @@
                 opacity: 1;
             }
             10% {
-                transform: translateX(-10px);
+                transform: translateX(-5px);
                 clip-path: polygon(10% 20%, 90% 20%, 90% 80%, 10% 80%);
                 filter: hue-rotate(90deg);
             }
             20% {
-                transform: translateX(10px);
+                transform: translateX(5px);
                 clip-path: polygon(10% 10%, 90% 10%, 90% 90%, 10% 90%);
                 filter: hue-rotate(180deg);
             }
             30% {
-                transform: translateX(-5px);
+                transform: translateX(-3px);
                 clip-path: polygon(0% 30%, 100% 30%, 100% 70%, 0% 70%);
                 filter: hue-rotate(270deg);
             }
             40% {
-                transform: translateX(5px);
+                transform: translateX(3px);
                 clip-path: polygon(0% 20%, 100% 20%, 100% 80%, 0% 80%);
                 filter: hue-rotate(360deg);
             }
             50% {
-                transform: translateX(-8px);
+                transform: translateX(-2px);
                 clip-path: polygon(5% 40%, 95% 40%, 95% 60%, 5% 60%);
                 filter: hue-rotate(90deg);
             }
             60% {
-                transform: translateX(8px);
+                transform: translateX(2px);
                 clip-path: polygon(5% 30%, 95% 30%, 95% 70%, 5% 70%);
                 filter: hue-rotate(180deg);
             }
             70% {
-                transform: translateX(-3px);
+                transform: translateX(-1px);
                 clip-path: polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%);
                 filter: hue-rotate(270deg);
             }
             80% {
-                transform: translateX(3px);
+                transform: translateX(1px);
                 clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
                 filter: hue-rotate(360deg);
             }
             90% {
-                transform: translateX(-2px);
+                transform: translateX(-1px);
                 clip-path: polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%);
                 filter: hue-rotate(90deg);
             }
@@ -808,84 +811,43 @@
             }
         }
 
-        /* Estilos para proyectos */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-        }
-
-        .project-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid var(--accent-blue);
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 20px var(--accent-blue);
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: linear-gradient(
-                45deg,
-                transparent,
-                rgba(0, 162, 255, 0.1),
-                transparent
-            );
-            transition: all 0.5s ease;
-        }
-
-        .project-card:hover::before {
-            top: -50%;
-            left: -50%;
-        }
-
-        /* Responsive Design */
+        /* Estilos específicos para móvil */
         @media (max-width: 768px) {
-            .project-grid {
-                grid-template-columns: 1fr;
-                padding: 1rem;
+            .glitch-transition {
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
 
-            .title {
-                font-size: 1.5rem;
+            .glitch-transition.active {
+                animation: glitch-animation-mobile 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
             }
 
-            .subtitle {
-                font-size: 0.7rem;
-            }
-
-            .social-btn {
-                width: 50px;
-                height: 50px;
-            }
-        }
-
-        /* Modo oscuro/claro mejorado */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --main-bg: #0a0a0a;
-                --text-color: #ffffff;
-            }
-        }
-
-        @media (prefers-color-scheme: light) {
-            :root {
-                --main-bg: #ffffff;
-                --text-color: #0a0a0a;
+            @keyframes glitch-animation-mobile {
+                0% {
+                    transform: translateX(0);
+                    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                    opacity: 1;
+                }
+                25% {
+                    transform: translateX(-2px);
+                    clip-path: polygon(20% 30%, 80% 30%, 80% 70%, 20% 70%);
+                    filter: hue-rotate(90deg);
+                }
+                50% {
+                    transform: translateX(2px);
+                    clip-path: polygon(20% 20%, 80% 20%, 80% 80%, 20% 80%);
+                    filter: hue-rotate(180deg);
+                }
+                75% {
+                    transform: translateX(-1px);
+                    clip-path: polygon(10% 40%, 90% 40%, 90% 60%, 10% 60%);
+                    filter: hue-rotate(270deg);
+                }
+                100% {
+                    transform: translateX(0);
+                    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                    opacity: 0;
+                }
             }
         }
 
@@ -1446,30 +1408,45 @@
             // Función mejorada para la transición glitch
             function triggerGlitch() {
                 const glitch = document.querySelector('.glitch-transition');
+                const content = document.querySelector('.content');
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+                // Prevenir múltiples activaciones simultáneas
+                if (glitch.classList.contains('active')) return;
+
+                // Aplicar efecto de distorsión al contenido
+                content.style.filter = 'blur(3px)';
+                content.style.transition = 'filter 0.3s ease';
+
+                // Activar el efecto glitch
                 glitch.classList.add('active');
-                
-                // Aplicar efecto de distorsión a todo el contenido
-                document.querySelector('.content').style.filter = 'blur(5px)';
-                
+
+                // Ajustar la duración según el dispositivo
+                const duration = isMobile ? 1500 : 1500;
+
                 setTimeout(() => {
                     glitch.classList.remove('active');
-                    document.querySelector('.content').style.filter = 'none';
-                }, 1500);
+                    content.style.filter = 'none';
+                }, duration);
             }
 
-            // Agregar botón de volver a cada página de proyecto
-            function addBackButton() {
-                const backButton = document.createElement('a');
-                backButton.href = '/';
-                backButton.className = 'back-button';
-                backButton.innerHTML = '<i class="fas fa-arrow-left"></i> Volver';
-                document.body.appendChild(backButton);
-            }
-
-            // Detectar si estamos en una página de proyecto
-            if (window.location.pathname.includes('/proyectos/')) {
-                addBackButton();
-            }
+            // Manejador de clics en las tarjetas de proyectos
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', async (e) => {
+                    if (card.classList.contains('locked')) return;
+                    
+                    e.preventDefault();
+                    const projectId = card.dataset.project;
+                    
+                    // Activar efecto glitch
+                    triggerGlitch();
+                    
+                    // Esperar a que termine la animación antes de redirigir
+                    setTimeout(() => {
+                        window.location.href = `./proyectos/${projectId}.html`;
+                    }, 800);
+                });
+            });
 
             // Detectar si el dispositivo es móvil
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -1477,29 +1454,16 @@
             // Ajustar comportamiento según el dispositivo
             if (isMobile) {
                 document.body.classList.add('mobile');
-                // Agregar gestos táctiles para navegación
-                let touchstartX = 0;
-                let touchendX = 0;
-
-                document.addEventListener('touchstart', e => {
-                    touchstartX = e.changedTouches[0].screenX;
+                
+                // Optimizar el rendimiento en móvil
+                document.querySelectorAll('img').forEach(img => {
+                    img.loading = 'lazy';
                 });
 
-                document.addEventListener('touchend', e => {
-                    touchendX = e.changedTouches[0].screenX;
-                    handleGesture();
+                // Reducir la intensidad de las animaciones
+                document.querySelectorAll('.project-card').forEach(card => {
+                    card.style.transition = 'transform 0.2s ease';
                 });
-
-                function handleGesture() {
-                    if (touchendX < touchstartX) {
-                        // Deslizar a la izquierda
-                        triggerGlitch();
-                    }
-                    if (touchendX > touchstartX) {
-                        // Deslizar a la derecha
-                        history.back();
-                    }
-                }
             }
 
             // Función para manejar el desbloqueo de contenido
