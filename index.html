@@ -255,41 +255,78 @@
             overflow: hidden;
         }
 
-        .donation-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 56, 96, 0.6);
+        .donation-btn.locked {
+            filter: grayscale(100%) brightness(0.5);
+            pointer-events: none;
+            position: relative;
         }
 
-        .donation-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 10px rgba(255, 56, 96, 0.4);
+        .donation-btn.locked::before {
+            content: '🔒';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            z-index: 3;
+            animation: lockPulse 2s infinite;
         }
 
-        .donation-btn::after {
+        .donation-btn.locked::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: rotate(45deg);
-            transition: all 0.3s ease;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(0, 0, 0, 0.1),
+                rgba(0, 0, 0, 0.1) 10px,
+                rgba(0, 0, 0, 0.2) 10px,
+                rgba(0, 0, 0, 0.2) 20px
+            );
+            z-index: 2;
         }
 
-        .donation-btn:hover::after {
-            animation: donationPulse 1s ease-in-out;
+        .donation-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        @keyframes donationPulse {
-            0% {
-                top: -50%;
-                left: -50%;
-            }
-            100% {
-                top: 50%;
-                left: 50%;
-            }
+        .donation-btn:hover .donation-overlay {
+            opacity: 1;
+        }
+
+        .donation-message {
+            color: var(--text-color);
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 0 20px var(--accent-blue);
+        }
+
+        .donation-message h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .donation-message p {
+            font-size: 0.8rem;
+            margin-bottom: 15px;
         }
 
         /* Projects Section */
@@ -646,6 +683,7 @@
             background: var(--card-bg);
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
 
         .form-group {
@@ -667,6 +705,14 @@
             background: var(--main-bg);
             color: var(--text-color);
             font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 10px var(--accent-purple);
         }
 
         .form-group textarea {
@@ -683,11 +729,73 @@
             cursor: pointer;
             font-size: 0.9rem;
             transition: all 0.3s ease;
+            width: 100%;
         }
 
         .submit-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 162, 255, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .form-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            display: block;
+        }
+
+        .form-message.error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            display: block;
+        }
+
+        .form-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .form-loading.active {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--accent-blue);
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Back to Top Button */
@@ -1044,7 +1152,7 @@
                 <img src="logo_Twilight.png" alt="E-Twilight Logo">
             </div>
             <h1 class="title">E-TWILIGHT</h1>
-            <p class="subtitle">Plataforma Creativa Digital</p>
+            <p class="subtitle">Dulce y letal, como un consuelo que llega tarde</p>
         </header>
 
         <!-- Social Links -->
@@ -1052,7 +1160,7 @@
             <a href="https://www.youtube.com/@xpromentalia" class="social-btn" target="_blank">
                 <i class="fab fa-youtube"></i>
             </a>
-            <a href="https://www.instagram.com/xpromentalia/" class="social-btn" target="_blank">
+            <a href="https://www.instagram.com/encantostwilight/" class="social-btn" target="_blank">
                 <i class="fab fa-instagram"></i>
             </a>
             <a href="https://www.twitch.tv/leoyxproleo" class="social-btn" target="_blank">
@@ -1073,9 +1181,15 @@
         </div>
 
         <!-- Donation Button -->
-        <a href="https://patreon.com/Twilight440" class="donation-btn" target="_blank">
+        <div class="donation-btn locked">
             APOYAR A E-TWILIGHT
-        </a>
+            <div class="donation-overlay">
+                <div class="donation-message">
+                    <h3>¡Apoyo Bloqueado!</h3>
+                    <p>El sistema de apoyo estará disponible próximamente</p>
+                </div>
+            </div>
+        </div>
 
         <!-- Search Bar -->
         <div class="search-container">
@@ -1216,23 +1330,15 @@
             </div>
         </div>
 
-        <!-- Contact Form -->
+        <!-- Contact Section -->
         <h2 class="section-title">CONTACTO</h2>
-        <form class="contact-form" id="contactForm">
-            <div class="form-group">
-                <label for="name">Nombre</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Mensaje</label>
-                <textarea id="message" name="message" required></textarea>
-            </div>
-            <button type="submit" class="submit-btn">Enviar Mensaje</button>
-        </form>
+        <div class="contact-info" style="text-align: center; margin: 40px auto; max-width: 600px; padding: 20px; background: var(--card-bg); border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
+            <p style="font-size: 1.2rem; margin-bottom: 20px; color: var(--accent-cyan);">¿Quieres contactarnos?</p>
+            <a href="mailto:xpromentalia@gmail.com" style="color: var(--accent-blue); text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease;">
+                <i class="fas fa-envelope" style="margin-right: 10px;"></i>
+                xpromentalia@gmail.com
+            </a>
+        </div>
 
         <!-- Back to Top Button -->
         <button class="back-to-top" aria-label="Back to top">
@@ -1246,6 +1352,52 @@
     </div>
 
     <script>
+        // Traducciones
+        const translations = {
+            es: {
+                title: "E-TWILIGHT",
+                subtitle: "Dulce y letal, como un consuelo que llega tarde",
+                support: "APOYAR A E-TWILIGHT",
+                search: "Buscar proyectos...",
+                currentProjects: "PROYECTOS ACTUALES",
+                gallery: "GALERÍA",
+                community: "COMUNIDAD Y COLABORACIÓN",
+                soundtrack: "BANDA SONORA OFICIAL",
+                contact: "CONTACTO",
+                contactUs: "¿Quieres contactarnos?",
+                locked: "Bloqueado",
+                lockedContent: "¡Contenido Bloqueado!",
+                lockedMessage: "Completa los requisitos para desbloquear este proyecto",
+                unlock: "Desbloquear",
+                lockedGallery: "¡Galería Bloqueada!",
+                lockedGalleryMessage: "Completa los requisitos para desbloquear la galería",
+                supportLocked: "¡Apoyo Bloqueado!",
+                supportLockedMessage: "El sistema de apoyo estará disponible próximamente",
+                footer: "© 2025 E-Twilight. Todos los derechos reservados."
+            },
+            en: {
+                title: "E-TWILIGHT",
+                subtitle: "Sweet and lethal, like a consolation that comes too late",
+                support: "SUPPORT E-TWILIGHT",
+                search: "Search projects...",
+                currentProjects: "CURRENT PROJECTS",
+                gallery: "GALLERY",
+                community: "COMMUNITY & COLLABORATION",
+                soundtrack: "OFFICIAL SOUNDTRACK",
+                contact: "CONTACT",
+                contactUs: "Want to contact us?",
+                locked: "Locked",
+                lockedContent: "Content Locked!",
+                lockedMessage: "Complete the requirements to unlock this project",
+                unlock: "Unlock",
+                lockedGallery: "Gallery Locked!",
+                lockedGalleryMessage: "Complete the requirements to unlock the gallery",
+                supportLocked: "Support Locked!",
+                supportLockedMessage: "The support system will be available soon",
+                footer: "© 2025 E-Twilight. All rights reserved."
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             // Intro animation
             setTimeout(() => {
@@ -1359,9 +1511,64 @@
 
             // Language Selector
             const languageSelector = document.querySelector('.language-selector');
+            
+            function updateLanguage(lang) {
+                // Actualizar textos
+                document.querySelector('.title').textContent = translations[lang].title;
+                document.querySelector('.subtitle').textContent = translations[lang].subtitle;
+                document.querySelector('.donation-btn').textContent = translations[lang].support;
+                document.querySelector('.search-bar').placeholder = translations[lang].search;
+                document.querySelectorAll('.section-title').forEach((title, index) => {
+                    if (index === 0) title.textContent = translations[lang].currentProjects;
+                    else if (index === 1) title.textContent = translations[lang].gallery;
+                    else if (index === 2) title.textContent = translations[lang].community;
+                    else if (index === 3) title.textContent = translations[lang].soundtrack;
+                    else if (index === 4) title.textContent = translations[lang].contact;
+                });
+                document.querySelector('.contact-info p').textContent = translations[lang].contactUs;
+                document.querySelector('footer p').textContent = translations[lang].footer;
+
+                // Actualizar textos de elementos bloqueados
+                document.querySelectorAll('.project-status').forEach(status => {
+                    status.textContent = translations[lang].locked;
+                });
+
+                document.querySelectorAll('.locked-message h3').forEach(title => {
+                    if (title.closest('.project-card')) {
+                        title.textContent = translations[lang].lockedContent;
+                    } else if (title.closest('.gallery')) {
+                        title.textContent = translations[lang].lockedGallery;
+                    } else {
+                        title.textContent = translations[lang].supportLocked;
+                    }
+                });
+
+                document.querySelectorAll('.locked-message p').forEach(message => {
+                    if (message.closest('.project-card')) {
+                        message.textContent = translations[lang].lockedMessage;
+                    } else if (message.closest('.gallery')) {
+                        message.textContent = translations[lang].lockedGalleryMessage;
+                    } else {
+                        message.textContent = translations[lang].supportLockedMessage;
+                    }
+                });
+
+                document.querySelectorAll('.unlock-btn').forEach(btn => {
+                    btn.textContent = translations[lang].unlock;
+                });
+
+                // Guardar preferencia de idioma
+                localStorage.setItem('language', lang);
+            }
+
+            // Cargar idioma guardado o usar el predeterminado
+            const savedLanguage = localStorage.getItem('language') || 'es';
+            languageSelector.value = savedLanguage;
+            updateLanguage(savedLanguage);
+
+            // Evento de cambio de idioma
             languageSelector.addEventListener('change', (e) => {
-                // Here you would implement language switching logic
-                console.log('Language changed to:', e.target.value);
+                updateLanguage(e.target.value);
             });
 
             // Search Functionality
@@ -1374,15 +1581,6 @@
                     const isVisible = title.includes(searchTerm) || desc.includes(searchTerm);
                     card.style.display = isVisible ? 'block' : 'none';
                 });
-            });
-
-            // Contact Form
-            const contactForm = document.getElementById('contactForm');
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                // Here you would implement form submission logic
-                alert('¡Gracias por tu mensaje! Te responderemos pronto.');
-                contactForm.reset();
             });
 
             // Back to Top Button
