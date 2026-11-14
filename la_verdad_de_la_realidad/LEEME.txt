@@ -1,0 +1,43 @@
+============================================
+ LA VERDAD DE LA REALIDAD
+ Novela visual en pixel art — Capítulo 00
+ "Un día normal"
+============================================
+
+CÓMO JUGAR EN PC (Windows, Mac o Linux)
+1. Descomprime este archivo (clic derecho → "Extraer todo" o "Descomprimir aquí").
+2. Entra a la carpeta "Juego" y abre el archivo "index.html" con doble clic.
+   Si no se abre solo, ábrelo desde Chrome, Edge o Firefox (Archivo → Abrir).
+3. No necesita internet ni instalación: funciona sin conexión.
+
+CÓMO JUGAR EN CELULAR
+· Android: descomprime con la app "Archivos" y toca "index.html" (se abre en Chrome).
+· iPhone / iPad: guarda el .zip en la app "Archivos", tócalo para descomprimir y
+  abre "index.html".
+
+CÓMO SE JUEGA
+· Pantalla de inicio: presiona cualquier tecla o toca la pantalla.
+· Avanza el diálogo con clic, toque, Espacio o Enter.
+· Menú: Nueva partida, Continuar, Escenas, Personajes, Opciones y Créditos.
+· En "Opciones" puedes cambiar el volumen de la música y la velocidad del texto.
+· Con "GUARDAR" (dentro de una escena) queda marcada tu posición; después usas
+  "Continuar" desde el menú.
+
+QUÉ INCLUYE
+· Capítulo 00 completo: 3 escenas (la noche del 17 de mayo, la mañana siguiente
+  y la chica nueva), con retratos, efectos y la música de fondo.
+· Música: "La Noche Solitaria" — The Gold Wolves.
+· Carpeta "Codigo fuente": el proyecto para quien quiera editarlo.
+  Necesita Node.js o Bun: dentro de la carpeta ejecuta "bun install" y luego
+  "bun run dev". (Las imágenes del código fuente se cargan desde el hosting de
+  Lovable; la carpeta "Juego" ya las trae incluidas y funciona sin internet.)
+· Carpeta "Guion": el guion del capítulo en texto.
+
+CRÉDITOS
+· Historia y personajes: Leo Franco Elias Condori.
+· Prototipo v0.1.
+
+NOTA SOBRE EL FORMATO
+Este paquete viene en .zip, no en .rar: el .rar necesita el programa WinRAR
+(de pago) para crearse, y el .zip se abre solo en Windows, Mac, Android y iPhone.
+Si alguien te pide un .rar, puede convertirlo con WinRAR en un clic.
