@@ -734,7 +734,7 @@ header {
 }
 
 .contact-info a {
-    color: var(--accent-blue);
+    color: #9363e0;
     text-decoration: none;
     font-size: 1.1rem;
     transition: all 0.3s ease;
@@ -743,9 +743,9 @@ header {
 }
 
 .contact-info a:hover {
-    color: var(--accent-cyan);
+    color: #b98cff;
     transform: translateY(-2px);
-    text-shadow: 0 0 10px var(--accent-cyan);
+    text-shadow: 0 0 10px #b98cff;
 }
 
 .contact-info a i {
