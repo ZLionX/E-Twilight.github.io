@@ -1,6 +1,6 @@
 <!-- LOVABLE:BEGIN -->
 > [!IMPORTANT]
-> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
+> This project is connected to [Lovable](). Avoid rewriting
 > published git history — force pushing, or rebasing/amending/squashing commits
 > that are already pushed — as it rewrites history on Lovable's side and the
 > user will likely lose their project history.
@@ -11,7 +11,7 @@
 ## What Lovable manages
 
 Rules outside this block are the project's own. Change the pieces below in
-Lovable, not by hand. With the [Lovable MCP](https://mcp.lovable.dev)
+Lovable, not by hand. With the [Lovable MCP]()
 connected, `send_message` asks Lovable to do it; otherwise ask the user to
 use the editor.
 

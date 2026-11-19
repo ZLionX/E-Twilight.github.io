@@ -222,8 +222,9 @@ function Credits({ back }: { back: () => void }) {
     <Panel title="CRÉDITOS" back={back}>
       <div className="flex flex-1 flex-col items-center justify-center gap-4 text-center font-body text-2xl text-foreground">
         <Title small />
-        <p>Historia y personajes: Leo Franco Elias Condori M.</p>
-        <p>Música: «La Noche Solitaria» — The Gold Wolves</p>
+        <p>Ximena Gutsfan — Diseño y Pixel Art</p>
+        <p>The Gold Wolves — Música</p>
+        <p>Tacemothomo — Historia y personajes</p>
         <p className="text-muted-foreground">Prototipo v0.1</p>
       </div>
     </Panel>
